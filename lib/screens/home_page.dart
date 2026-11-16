@@ -5,6 +5,7 @@ import '../core/theme.dart';
 import '../data/services_data.dart';
 import '../state/wallet_state.dart';
 import 'flow_pages.dart';
+import 'send_money/contacts_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -59,7 +60,10 @@ class _HomePageState extends State<HomePage> {
               children: [
                 for (final s in services)
                   InkWell(
-                    onTap: () => Navigator.push(c, MaterialPageRoute(builder: (_) => ServiceFormPage(def: s))),
+                    onTap: () => Navigator.push(c, MaterialPageRoute(
+    builder: (_) => s.id == 'send'
+        ? const ContactsPage()
+        : ServiceFormPage(def: s))),
                     child: Column(children: [
                       Image.asset('assets/icons/${s.icon}.png', width: 52),
                       const SizedBox(height: 6),
