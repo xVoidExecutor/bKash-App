@@ -53,4 +53,14 @@ class WalletState extends ChangeNotifier {
     notifyListeners();
     return t;
   }
+
+  Txn applySend(Map<String, dynamic> json) {
+    final t = Txn.fromJson(json);
+    balance = t.balanceAfter;
+    txns.insert(0, t);
+    inbox.insert(0, InboxMsg('সেন্ড মানি সফল',
+        '${taka(t.amount)} · TrxID ${t.id} · ব্যালেন্স ${taka(balance)}', 'txn', t.at));
+    notifyListeners();
+    return t;
+  }
 }
