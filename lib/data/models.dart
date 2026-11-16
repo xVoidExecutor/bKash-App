@@ -1,4 +1,4 @@
-enum FieldType { phone, amount, text, select }
+Enum FieldType { phone, amount, text, select }
 
 class Field {
   final String key, label;
@@ -27,6 +27,22 @@ class Txn {
       required this.ref, required this.amount, required this.fee,
       required this.balanceAfter, required this.at,
       required this.credit, required this.isSend});
+
+  factory Txn.fromJson(Map<String, dynamic> j) {
+    final d = j['data'] as Map<String, dynamic>;
+    return Txn(
+      id: d['trxId'],
+      title: 'সেন্ড মানি',
+      phone: d['receiver']['msisdn'],
+      ref: d['reference'] ?? '',
+      amount: (d['amount'] as num).toDouble(),
+      fee: (d['fee'] as num).toDouble(),
+      balanceAfter: (d['newBalance'] as num).toDouble(),
+      at: DateTime.parse(d['timestamp']).toLocal(),
+      credit: false,
+      isSend: true,
+    );
+  }
 }
 
 class InboxMsg {
